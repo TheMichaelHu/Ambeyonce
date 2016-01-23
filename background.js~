@@ -11,8 +11,8 @@ SC.initialize({
   client_id: 'b0a091a24c88bbd1f400dcac693b86a5',
   redirect_uri: 'http://klevingluo.me/callback'
 });
-var M;
-//playNextSong()
+
+playNextSong()
 var playing = true;
 var player;
 var track = 0;
@@ -37,47 +37,18 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 });
 
 // functions
-function playNextSong(mood) {
-  mood = M;
-  playing = false;
-  var type;
- var beat;
- if (mood == 'Happy'){
-    type = 'pop';
-    beat = 140;
-    }
- else if (mood == 'Sad'){
-    type = 'piano';
-    beat =40;
-     }
- else if (mood == 'Angry'){
-    type = 'metal';
-    beat = 120;
-    }
-else if (mood == 'Neutral'){
-    type = 'dubstep';
-    beat = 100;
-   }
-else if (mood == 'Fear'){
-    type = 'classical';
-    beat = 120;
-   }
-else {
-    type = 'country';
-    beat = 80;
-}
-
+function playNextSong() {
   playing = false;
   SC.get('/tracks', {
-    genres: type, 
-    bpm: { from: beat }
+    genres: 'dubstep', 
+    bpm: { from: 120 }
     }).then(function(tracks) {
     playTrack(tracks[track++ % tracks.length].id)
   });
 }
 
 function NextSong() {
-  playNextSong(M);
+  playNextSong();
   consol.log("playing next song");
 }
 
@@ -114,11 +85,10 @@ function getMood(data) {
       'data': data.split(',')[1]
     })
   ).then(function(res) {
-    console.log(res);
     res = JSON.parse(res);
     var max = 0;
     var mood = "";
-
+    console.log(res);
     for (var emotion in res["results"]) {
       if(res["results"][emotion] > max) {
         max = res["results"][emotion];
@@ -126,8 +96,6 @@ function getMood(data) {
       }
     }
     chrome.runtime.sendMessage({from: "background", action: "moodGet", content: mood});
-    console.log(mood);
-    M = mood;
     return mood;
   });
 }
@@ -155,5 +123,3 @@ chrome.runtime.onMessage.addListener( function(message, sender, sendResponse) {
     }
   }
 });
-
-playNextSong(M);
