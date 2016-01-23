@@ -43,7 +43,7 @@ function playNextSong() {
     genres: 'dubstep', 
     bpm: { from: 120 }
     }).then(function(tracks) {
-    playTrack(tracks[track++].id)
+    playTrack(tracks[track++ % tracks.length].id)
   });
 }
 
@@ -56,6 +56,11 @@ function playTrack(id) {
   SC.stream('/tracks/' + id).then(function(newPlayer){
     player = {};
     newPlayer.on('finish', NextSong);
+    newPlayer.on('no_streams', NextSong);
+    newPlayer.on('no_protocol', NextSong);
+    newPlayer.on('no_connection', NextSong);
+    newPlayer.on('audio_error', NextSong);
+    newPlayer.on('geo_blocked', NextSong);
     player = newPlayer;
     player.play();
     console.log(track.title);
@@ -73,29 +78,26 @@ function getNewSong(mood) {
 	});
 }
 
-function getMoodResponse(data) {
+function getMood(data) {
   $.post(
     'https://apiv2.indico.io/fer?key=17ab107868cf822a3deb50a6dff8078a',
     JSON.stringify({
       'data': data.split(',')[1]
     })
   ).then(function(res) {
+    res = JSON.parse(res);
+    var max = 0;
+    var mood = "";
     console.log(res);
-    return res;
-  });
-}
-
-function getMood(data) {
-  response = getMoodResponse(data);
-  var max = 0;
-  var mood = "";
-  for (var emotion in response) {
-    if(response[emotion] > max) {
-      max = response[emotion];
-      mood = emotion;
+    for (var emotion in res["results"]) {
+      if(res["results"][emotion] > max) {
+        max = res["results"][emotion];
+        mood = emotion;
+      }
     }
-  }
-  return emotion;
+    chrome.runtime.sendMessage({from: "background", action: "moodGet", content: mood});
+    return mood;
+  });
 }
 
 // listeners

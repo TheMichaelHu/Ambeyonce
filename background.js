@@ -43,7 +43,7 @@ function playNextSong() {
     genres: 'dubstep', 
     bpm: { from: 120 }
     }).then(function(tracks) {
-    playTrack(tracks[track++].id)
+    playTrack(tracks[track++ % tracks.length].id)
   });
 }
 
