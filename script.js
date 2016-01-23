@@ -39,7 +39,7 @@ window.onload = function() {
       canvas.width = vid.videoWidth;
       canvas.height = vid.videoHeight;
       canvas.getContext('2d').drawImage(vid, 0, 0);
-      var data = canvas.toDataURL('image/webp');
+      var data = canvas.toDataURL();
       document.getElementById('photo').setAttribute('src', data);
 //      chrome.runtime.getBackgroundPage(function(bgWindow) {
 //        bgWindow.popup();
@@ -48,7 +48,6 @@ window.onload = function() {
         {from: "popup", action: "getMood", content: data},
         processMood
       );
-      alert("test1");
    }, false);
 
   } else {
