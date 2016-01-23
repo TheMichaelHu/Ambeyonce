@@ -22,3 +22,14 @@ h1 {
 .navbar {
 	background-color: #333;
 }
+
+.footer {
+	margin-top: 70px;
+	background-color: #333;
+	min-height: 70px;
+	color:#eee;
+}
+
+.footer p {
+	padding-top: 25px;
+}

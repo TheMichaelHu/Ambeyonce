@@ -55,8 +55,30 @@ window.onload = function() {
   chrome.runtime.onMessage.addListener( function(message, sender, sendResponse) {
     switch(message.action){
       case "moodGet":
-      console.log(message);
         $("#mood").text(message.content);
+        var url = "";
+        console.log(message.content);
+        switch(message.content) {
+          case "Angry":
+            url = "http://www.mrctv.org/sites/default/files/images/Angry-Beyonce.jpg ";
+            break;
+          case "Surprise":
+            url = "http://images.intouchweekly.com/uploads/posts/image/27459/beyonce-surprises.jpg";
+            break;
+          case "Fear":
+            url = "http://content.hollywire.com/sites/default/files/2013/02/04/beyonce-scared-supert-bowl.jpg";
+            break;
+          case "Happy":
+            url = "http://www.ew.com/sites/default/files/i/2013/09/04/Beyonce.jpg";
+            break;
+          case "Sad":
+            url = "http://i2.wp.com/behindthemirrorbeauty.com/wp-content/uploads/2013/11/Beyonce.jpg";
+            break;
+          default:
+            url = "http://factmag-images.s3.amazonaws.com/wp-content/uploads/2013/12/beyonce-121313.jpg";
+            break;
+        }
+        $("#queen-bee").attr('src', url);
         break;
     }
   });

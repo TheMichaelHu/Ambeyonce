@@ -75,10 +75,11 @@ function getMood(data) {
       'data': data.split(',')[1]
     })
   ).then(function(res) {
+    console.log(res);
     res = JSON.parse(res);
     var max = 0;
     var mood = "";
-    console.log(res);
+
     for (var emotion in res["results"]) {
       if(res["results"][emotion] > max) {
         max = res["results"][emotion];
