@@ -33,3 +33,7 @@ h1 {
 .footer p {
 	padding-top: 25px;
 }
+
+.btn {
+	border: 1px solid #333;
+}
