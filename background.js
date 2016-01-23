@@ -8,7 +8,10 @@ audio.addEventListener("ended", function() {
 // functions
 function playNextSong() {
 	audio = new Audio(getNewSong(getMood()));
-	audio.load()
+	audio.play()
+  audio.addEventListener("ended", function() { 
+    playNextSong();
+  });
 }
 
 function getNewSong(mood) {
@@ -18,30 +21,32 @@ function getNewSong(mood) {
 	});
 }
 
-//function getMood() {
-	// single example
-//	$.post(
-//	  'https://apiv2.indico.io/fer',
-//	  JSON.stringify({
-//	    'data': "<IMAGE>" //Need the image
-//	  })
-//	).then(function(res) { 
-//		console.log(res); 
-//		return res;
-//	});
+function getMoodResponse(data) {
+  $.post(
+    'https://apiv2.indico.io/fer?key=17ab107868cf822a3deb50a6dff8078a',
+    JSON.stringify({
+      'data': data.split(',')[1]
+    })
+  ).then(function(res) {
+    console.log(res);
+    return res;
+  });
+}
 
-	// batch example
-	// $.post(
-	//   'https://apiv2.indico.io/fer/batch',
-	//   JSON.stringify({
-	//     'data': [
-	//       "<IMAGE>",
-	//       "<IMAGE>"
-	//     ]
-	//   })
-	// ).then(function(res) { console.log(res) });
-//}
+function getMood(data) {
+  response = getMoodResponse(data);
+  var max = 0;
+  var mood = "";
+  for (var emotion in response) {
+    if(response[emotion] > max) {
+      max = response[emotion];
+      mood = emotion;
+    }
+  }
+  return emotion;
+}
 
+// listeners
 chrome.extension.onMessage.addListener(
   function(request, sender, sendResponse) {
     switch (request.directive) {
@@ -54,28 +59,6 @@ chrome.extension.onMessage.addListener(
         audio.paused = !audio.paused;
       break;
     }});
-
-function imageCapture() {
-	chrome.storage.local.set({'value': theValue}, function() {
-    // Notify that we saved.
-    message('Settings saved');
-  });
-}
-
-function getMood(data) {
-  $.post(
-    'https://apiv2.indico.io/fer?key=17ab107868cf822a3deb50a6dff8078a',
-    JSON.stringify({
-      'data': data.split(',')[1]
-    })
-  ).then(function(res) {
-    console.log(res);
-    return res;
-  });
-}
-function test() {
-  window.alert("test");
-}
 
 chrome.runtime.onMessage.addListener( function(message, sender, sendResponse) {
   if(message.from && message.from === "popup") {
