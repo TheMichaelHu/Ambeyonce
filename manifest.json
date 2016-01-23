@@ -6,7 +6,6 @@
   "version": "1.0",
 
   "background": {
-      "page": "background.html",
       "scripts": ["background.js", "jquery-1.12.0.min.js"]
    },
 
