@@ -13,34 +13,53 @@ SC.initialize({
 });
 
 playNextSong()
+var playing = true;
+var player;
+var track = 0;
 
-//var track_url = ;;
-//SC.oEmbed(track_url, { auto_play: true }).then(function(oEmbed) {
- // console.log('oEmbed response: ', oEmbed);
-//});
-
-//audio.addEventListener("ended", function() { 
-//	  playNextSong();
-//	});
+chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+          if(message.from && message.from === "popup") {
+            switch(message.action){
+              case "next":
+                playNextSong();
+              break;
+              case "play":
+                if (playing) {
+                  player.pause();
+                  playing = false;
+                } else {
+                  player.play();
+                  playing = true;
+	        }
+              break;
+            }
+          }
+});
 
 // functions
 function playNextSong() {
+  playing = false;
   SC.get('/tracks', {
-    genres: 'pop', 
+    genres: 'rock', 
     bpm: { from: 120 }
     }).then(function(tracks) {
-    tracks = tracks.reverse();
-    tracks.forEach(function(track) {
-      console.log(track.title);
-      SC.stream('/tracks/' + track.id).then(function(player){
-        player.play();
-        console.log(track.title);
-        console.log(track.id);
-        player.on('finish', playNextSong);
-      });
-    });
+    playTrack(tracks[track++].id)
   });
 }
+
+function playTrack(id) {
+  SC.stream('/tracks/' + id).then(function(newPlayer){
+    player = {};
+    player = newPlayer;
+    player.play();
+    console.log(track.title);
+    console.log(track.id);
+    playing = true;
+    player.on('finish', playNextSong);
+  });
+}
+
+
 
 function getNewSong(mood) {
 	jQuery.get( "url", function(response) { 
