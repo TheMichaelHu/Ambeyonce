@@ -56,11 +56,6 @@ function playTrack(id) {
   SC.stream('/tracks/' + id).then(function(newPlayer){
     player = {};
     newPlayer.on('finish', NextSong);
-    newPlayer.on('no_streams', NextSong);
-    newPlayer.on('no_protocol', NextSong);
-    newPlayer.on('no_connection', NextSong);
-    newPlayer.on('audio_error', NextSong);
-    newPlayer.on('geo_blocked', NextSong);
     player = newPlayer;
     player.play();
     console.log(track.title);
