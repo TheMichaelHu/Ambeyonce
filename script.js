@@ -24,7 +24,6 @@ window.onload = function() {
       });
 
     document.addEventListener('checkMood', function() {
-    // document.getElementById('take').addEventListener('click', function() {
       var canvas = document.getElementById('canvas'); 
       canvas.width = vid.videoWidth;
       canvas.height = vid.videoHeight;

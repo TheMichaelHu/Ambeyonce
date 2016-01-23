@@ -1,3 +1,11 @@
+chrome.tabs.create({'url': chrome.extension.getURL('popup.html')}, function(tab) {
+  // Tab opened.
+});
+chrome.browserAction.onClicked.addListener(function() {
+   chrome.tabs.create({'url': 'popup.html'}, function(window) {
+   });
+});
+
 // globals
 var audio = new Audio('http://datashat.net/music_for_programming_1-datassette.mp3');
 audio.play();
