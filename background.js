@@ -41,6 +41,7 @@ function getMood() {
 	//   })
 	// ).then(function(res) { console.log(res) });
 }
+
 chrome.extension.onMessage.addListener(
   function(request, sender, sendResponse) {
     switch (request.directive) {
@@ -53,3 +54,10 @@ chrome.extension.onMessage.addListener(
         audio.paused = !audio.paused;
       break;
     }});
+
+function imageCapture() {
+	chrome.storage.local.set({'value': theValue}, function() {
+    // Notify that we saved.
+    message('Settings saved');
+  });
+}
