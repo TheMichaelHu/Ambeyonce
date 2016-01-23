@@ -17,5 +17,7 @@
   "permissions": [
     "storage",
     "videoCapture"
-  ]
+  ],
+
+  "options_page": "options.html"
 }
