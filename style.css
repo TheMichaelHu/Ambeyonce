@@ -1,5 +1,5 @@
 body {
-	background-color: #eee;
+	background-color: #ddd;
 	font-family: 'Roboto';
 }
 
@@ -7,6 +7,10 @@ h1 {
 	font-family: 'Alex Brush';
 	font-size: 100px;
 	color: #eee;
+}
+
+.navbar-default {
+	margin-bottom: 0px;
 }
 
 #camera-stream, #photo {
