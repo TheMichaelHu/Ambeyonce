@@ -68,29 +68,26 @@ function getNewSong(mood) {
 	});
 }
 
-function getMoodResponse(data) {
+function getMood(data) {
   $.post(
     'https://apiv2.indico.io/fer?key=17ab107868cf822a3deb50a6dff8078a',
     JSON.stringify({
       'data': data.split(',')[1]
     })
   ).then(function(res) {
+    res = JSON.parse(res);
+    var max = 0;
+    var mood = "";
     console.log(res);
-    return res;
-  });
-}
-
-function getMood(data) {
-  response = getMoodResponse(data);
-  var max = 0;
-  var mood = "";
-  for (var emotion in response) {
-    if(response[emotion] > max) {
-      max = response[emotion];
-      mood = emotion;
+    for (var emotion in res["results"]) {
+      if(res["results"][emotion] > max) {
+        max = res["results"][emotion];
+        mood = emotion;
+      }
     }
-  }
-  return emotion;
+    chrome.runtime.sendMessage({from: "background", action: "moodGet", content: mood});
+    return mood;
+  });
 }
 
 // listeners
