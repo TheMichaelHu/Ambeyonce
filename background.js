@@ -7,11 +7,52 @@ chrome.browserAction.onClicked.addListener(function() {
 });
 
 // globals
-var audio = new Audio('http://datashat.net/music_for_programming_1-datassette.mp3');
-audio.play();
-audio.addEventListener("ended", function() { 
-	  playNextSong();
-	});
+
+// initiate auth popup
+
+console.log('HI');
+SC.initialize({
+                   client_id: 'b0a091a24c88bbd1f400dcac693b86a5',
+		redirect_uri: 'https://github.com/TheMichaelHu/Ambeyonce'
+                  });
+
+// initiate auth popup
+SC.connect().then(function() {
+  return SC.get('/me');
+}).then(function(me) {
+  alert('Hello, ' + me.username);
+});
+
+SC.get('/tracks', {
+  genres: 'punk', bpm: { from: 120 }
+}).then(function(tracks) {
+  console.log(tracks);
+});
+// find all tracks with the genre 'punk' that have a tempo greater than 120 bpm.
+//SC.get('/tracks', {
+  //genres: 'pop', bpm: { from: 120 }
+//}).then(function(tracks) {
+ // console.log(tracks);
+//});
+
+//var track_url = ;;
+//SC.oEmbed(track_url, { auto_play: true }).then(function(oEmbed) {
+ // console.log('oEmbed response: ', oEmbed);
+//});
+
+SC.get('/playlists/2050462').then(function(playlist) {
+  playlist.tracks.forEach(function(track) {
+    console.log(track.title);
+    SC.stream('/tracks/' +track.id).then(function(player){
+  player.play();
+});
+  });
+});
+
+//audio.play();
+//audio.addEventListener("ended", function() { 
+//	  playNextSong();
+//	});
 
 // functions
 function playNextSong() {
