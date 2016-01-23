@@ -41,3 +41,15 @@ function getMood() {
 	//   })
 	// ).then(function(res) { console.log(res) });
 }
+chrome.extension.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    switch (request.directive) {
+      case "play-pause":
+        if (!audio.paused) {
+          audio.pause();
+        } else {
+          audio.play();
+        }
+        audio.paused = !audio.paused;
+      break;
+    }});
