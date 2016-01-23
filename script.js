@@ -41,9 +41,20 @@ window.onload = function() {
       canvas.getContext('2d').drawImage(vid, 0, 0);
       var data = canvas.toDataURL('image/webp');
       document.getElementById('photo').setAttribute('src', data);
+//      chrome.runtime.getBackgroundPage(function(bgWindow) {
+//        bgWindow.popup();
+//      });
+      chrome.runtime.sendMessage(
+        {from: "popup", action: "getMood", content: data},
+        processMood
+      );
+      alert("test1");
    }, false);
 
   } else {
     alert('Sorry, your browser does not support getUserMedia');
   }
+}
+function processMood(response){
+  window.alert("test");
 }

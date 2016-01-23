@@ -18,17 +18,17 @@ function getNewSong(mood) {
 	});
 }
 
-function getMood() {
+//function getMood() {
 	// single example
-	$.post(
-	  'https://apiv2.indico.io/fer',
-	  JSON.stringify({
-	    'data': "<IMAGE>" //Need the image
-	  })
-	).then(function(res) { 
-		console.log(res); 
-		return res;
-	});
+//	$.post(
+//	  'https://apiv2.indico.io/fer',
+//	  JSON.stringify({
+//	    'data': "<IMAGE>" //Need the image
+//	  })
+//	).then(function(res) { 
+//		console.log(res); 
+//		return res;
+//	});
 
 	// batch example
 	// $.post(
@@ -40,7 +40,7 @@ function getMood() {
 	//     ]
 	//   })
 	// ).then(function(res) { console.log(res) });
-}
+//}
 
 chrome.extension.onMessage.addListener(
   function(request, sender, sendResponse) {
@@ -61,3 +61,35 @@ function imageCapture() {
     message('Settings saved');
   });
 }
+
+function getMood(data) {
+  alert("test5");
+  $.post(
+    'https://apiv2.indico.io/fer?key=17ab107868cf822a3deb50a6dff8078a',
+    JSON.stringify({
+      'data': data
+    })
+  ).then(function(res) {
+    console.log(res);
+    alert("test6");
+    alert(res);
+    alert("test7");
+    return res;
+  });
+}
+function test() {
+  window.alert("test");
+}
+
+chrome.runtime.onMessage.addListener( function(message, sender, sendResponse) {
+  alert("test2");
+  if(message.from && message.from === "popup") {
+    alert("test3");
+    switch(message.action){
+      case "getMood":
+        alert("test4");
+        getMood(message.content)
+        break;
+    }
+  }
+});
