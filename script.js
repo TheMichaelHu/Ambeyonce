@@ -9,21 +9,23 @@ window.onload = function() {
   // Check that the browser supports getUserMedia.
   // If it doesn't show an alert, otherwise continue.
   if (navigator.getUserMedia) {
+    var vid = document.getElementById('camera-stream');
     // Request the camera.
     navigator.getUserMedia(
       // Constraints
       {
-        video: true
+        video: true,
+	audio: false
       },
 
       // Success Callback
       function(localMediaStream) {
       	// Get a reference to the video element on the page.
-  var vid = document.getElementById('camera-stream');
+//  var vid = document.getElementById('camera-stream');
 
   // Create an object URL for the video stream and use this 
   // to set the video source.
-  vid.src = window.URL.createObjectURL(localMediaStream);
+  vid.src = window.URL.createObjectURL(localMediaStream); 
       },
 
       // Error Callback
@@ -32,6 +34,14 @@ window.onload = function() {
         console.log('The following error occurred when trying to use getUserMedia: ' + err);
       }
     );
+    document.getElementById('take').addEventListener('click', function(){
+      var canvas = document.getElementById('canvas'); 
+      canvas.width = vid.videoWidth;
+      canvas.height = vid.videoHeight;
+      canvas.getContext('2d').drawImage(vid, 0, 0);
+      var data = canvas.toDataURL('image/webp');
+      document.getElementById('photo').setAttribute('src', data);
+   }, false);
 
   } else {
     alert('Sorry, your browser does not support getUserMedia');
