@@ -44,11 +44,20 @@ window.onload = function() {
     }
   }, 10000);
 
-  chrome.extension.onMessage.addListener(
-  function(request, sender, sendResponse) {
+  chrome.extension.onMessage.addListener( function(request, sender, sendResponse) {
     switch (request.directive) {
       case "play-pause":
         keepCheckingMood = !keepCheckingMood;
-      break;
-    }});
+        break;
+    }
+  });
+
+  chrome.runtime.onMessage.addListener( function(message, sender, sendResponse) {
+    switch(message.action){
+      case "moodGet":
+      console.log(message);
+        $("#mood").text(message.content);
+        break;
+    }
+  });
 }

@@ -1,0 +1,24 @@
+body {
+	background-color: #eee;
+	font-family: 'Roboto';
+}
+
+h1 {
+	font-family: 'Alex Brush';
+	font-size: 100px;
+	color: #eee;
+}
+
+#camera-stream, #photo {
+	margin-top: 20px;
+	border: 10px solid #333;
+	border-radius: 42px;  
+}
+
+#controls {
+	padding-top: 20px;
+}
+
+.navbar {
+	background-color: #333;
+}
