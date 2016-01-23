@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- inline styles -->
+		<style>
+			body {background: black;display: -webkit-flex;-webkit-justify-content: center;-webkit-align-items: center;-webkit-flex-direction: column;}
+			video {width: 640px;height: 480px;background: rgba(0,0,0,0.25);}
+			.button{background-color:#1bbc9b;border:none;padding:10px 40px;border-radius:8px;color:white;text-align:center;text-decoration: none;}
+			.button:hover{background-color:#57a293;}
+		</style>
+	</head>
+	<body>
+		<table>
+				<td>
+					<video id="vid" autoplay></video>
+					<canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
+					<img width="640" height="480" style="display:none;" id="theimage"></img></a>
+				</td>
+			</tr>
+		
+			<tr>
+				<td>
+					<a class="button" style="display: block;" id="takepicture">Take selfie!</a>
+					<a class="button" style="display: none;" id="savepicture">Save picture!</a>
+				</td>
+			</tr>
+		</table>
+		<!-- JS code -->
+		<script src="app.js"></script>
+	</body>
+</html>
