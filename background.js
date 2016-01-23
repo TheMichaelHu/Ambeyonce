@@ -1,9 +1,6 @@
 // globals
 var audio = new Audio('http://datashat.net/music_for_programming_1-datassette.mp3');
-audio.load()
-audio.addEventListener("load", function() { 
-	  audio.play(); 
-	});
+audio.play();
 audio.addEventListener("ended", function() { 
 	  playNextSong();
 	});
@@ -44,5 +41,3 @@ function getMood() {
 	//   })
 	// ).then(function(res) { console.log(res) });
 }
-
-playNextSong();
