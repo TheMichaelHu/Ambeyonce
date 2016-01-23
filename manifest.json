@@ -17,6 +17,5 @@
     "storage",
     "https://connect.soundcloud.com/",
     "http://api.getsoundcloudify.com/*"
-  ],
-  "content-security-policy": "script-src 'unsafe-inline';object-src 'unsafe-inline' https://connect.soundcloud.com/sdk/flashAudio.swf"  
+  ]
 }

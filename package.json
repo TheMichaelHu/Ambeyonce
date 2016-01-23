@@ -1,0 +1,10 @@
+{
+  "name": "Ambeyonce",
+  "description": "Chrome extension music player that reacts to one's mood",
+  "version": "1.0.0",
+  "author": "Michael Hu <michaelanhu@gmail.com>",
+  "dependencies": {
+    "jquery": ">= 1.12",
+    "soundcloud": ">= 3.1"
+  }
+}
