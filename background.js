@@ -30,7 +30,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                 } else {
                   player.play();
                   playing = true;
-	        }
+	               }
               break;
             }
           }

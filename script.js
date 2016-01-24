@@ -44,14 +44,6 @@ window.onload = function() {
     }
   }, 10000);
 
-  chrome.extension.onMessage.addListener( function(request, sender, sendResponse) {
-    switch (request.directive) {
-      case "play-pause":
-        keepCheckingMood = !keepCheckingMood;
-        break;
-    }
-  });
-
   chrome.runtime.onMessage.addListener( function(message, sender, sendResponse) {
     switch(message.action){
       case "moodGet":
@@ -80,6 +72,9 @@ window.onload = function() {
         }
         $("#queen-bee").attr('src', url);
         break;
+      case "play":
+        keepCheckingMood = !keepCheckingMood;
+      break;
     }
   });
 }
