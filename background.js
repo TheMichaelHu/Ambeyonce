@@ -15,14 +15,15 @@ var M = 'Neutral';
 var playing = true;
 var player;
 var track = 0;
-
+var n = 0;
 NextSong();
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
           if(message.from && message.from === "popup") {
             switch(message.action){
               case "next":
-                playNextSong(M);
+                  n = 1;
+                  playNextSong(M);
               break;
               case "play":
                 if (playing) {
@@ -43,8 +44,9 @@ function playNextSong(mood) {
   var curr = mood;
   var type;
   var beat;
-  if (curr != prev){
+  if ((curr != prev) || (n == 1)){
     prev = curr;
+    next = 0;
     if (curr == 'Happy') {
       SC.get('/playlists/188701950').then(function(list) {
         playTrack(list.tracks[track++ % list.tracks.length].id);
