@@ -40,38 +40,43 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 var prev = 'Happy';
 // functions
 function playNextSong(mood) {
-  mood = M;
-  playing = false;
-
-  if (mood == 'Happy') {
-  SC.get('/playlists/188701950').then(function(list) {
-    playTrack(list.tracks[track++ % list.tracks.length].id);
-  });
-  }
-  else if (mood == 'Sad') {
-  SC.get('/playlists/188799404').then(function(list) {
-    playTrack(list.tracks[track++ % list.tracks.length].id);
-  });
-  }
-  else if (mood == 'Angry') {
-  SC.get('/playlists/188801285').then(function(list) {
-    playTrack(list.tracks[track++ % list.tracks.length].id);
-  });
+  var curr = mood;
+  var type;
+  var beat;
+  if (curr != prev){
+    prev = curr;
+    if (curr == 'Happy') {
+      SC.get('/playlists/188701950').then(function(list) {
+          playTrack(list.tracks[track++ % list.tracks.length].id);
+        });
+      }
+      else if (curr == 'Sad') {
+        SC.get('/playlists/188799404').then(function(list) {
+          playTrack(list.tracks[track++ % list.tracks.length].id);
+        });
+      }
+      else if (curr == 'Angry') {
+        SC.get('/playlists/188801285').then(function(list) {
+          playTrack(list.tracks[track++ % list.tracks.length].id);
+        });
+      }
+    else if (curr == 'Neutral') {
+      SC.get('/playlists/188803240').then(function(list) {
+        playTrack(list.tracks[track++ % list.tracks.length].id);
+      });
     }
-else if (mood == 'Neutral'){
-  SC.get('/playlists/188803240').then(function(list) {
-    playTrack(list.tracks[track++ % list.tracks.length].id);
-  });
-   }
-else if (mood == 'Fear'){
-  SC.get('/playlists/188787968').then(function(list) {
-    playTrack(list.tracks[track++ % list.tracks.length].id);
-  });
-}
-  else {
-    SC.get('/playlists/188803409').then(function(list) {
-    playTrack(list.tracks[track++ % list.tracks.length].id);
-    });
+    else if (curr == 'Fear'){
+      SC.get('/playlists/188787968').then(function(list) {
+        playTrack(list.tracks[track++ % list.tracks.length].id);
+      });
+    }
+    else {
+      SC.get('/playlists/188803409').then(function(list) {
+      playTrack(list.tracks[track++ % list.tracks.length].id);
+      });
+    }
+  } else {
+    playing = true;
   }
 }
 
@@ -127,6 +132,7 @@ function getMood(data) {
       chrome.runtime.sendMessage({from: "background", action: "moodGet", content: "You are feeling " + mood});
     }
     M = mood;
+    playNextSong(M);
     return mood;
   });
 }
