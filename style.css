@@ -1,6 +1,8 @@
 body {
 	background-color: #ddd;
 	font-family: 'Roboto';
+	background-image: url("background.png");
+	background-size: 100% 100%;
 }
 
 h1 {
@@ -20,7 +22,7 @@ video {
 
 #camera-stream, #photo {
 	margin-top: 20px;
-	border: 10px solid #333;
+	border: 10px solid rgba(14, 14, 14, 0.8);
 	border-radius: 42px;  
 }
 
@@ -29,12 +31,12 @@ video {
 }
 
 .navbar {
-	background-color: #333;
+	background-color: rgba(14, 14, 14, 0.8);
+	border: none;
 }
 
-.footer {
-	margin-top: 70px;
-	background-color: #333;
+.footer, footer {
+	background-color: rgba(14, 14, 14, 0.8);
 	min-height: 70px;
 	color:#eee;
 }
@@ -44,5 +46,5 @@ video {
 }
 
 .btn {
-	border: 1px solid #333;
+	border: 1px solid rgba(14, 14, 14, 0.8);
 }

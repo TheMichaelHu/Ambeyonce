@@ -117,6 +117,7 @@ function getMood(data) {
     })
   ).then(function(res) {
     res = JSON.parse(res);
+    console.log(res['results']['Sad']);
     var max = 0;
     var mood = "";
 
