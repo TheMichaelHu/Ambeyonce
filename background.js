@@ -133,19 +133,6 @@ function getMood(data) {
 }
 
 // listeners
-chrome.extension.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    switch (request.directive) {
-      case "play-pause":
-        if (!audio.paused) {
-          audio.pause();
-        } else {
-          audio.play();
-        }
-        audio.paused = !audio.paused;
-      break;
-    }});
-
 chrome.runtime.onMessage.addListener( function(message, sender, sendResponse) {
   if(message.from && message.from === "popup") {
     switch(message.action){

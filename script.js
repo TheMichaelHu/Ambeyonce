@@ -1,6 +1,5 @@
 window.onload = function() {
   var event = document.createEvent('Event');
-  var keepCheckingMood = true;
   event.initEvent('checkMood', true, true);
 
   navigator.getUserMedia = (navigator.getUserMedia ||
@@ -39,10 +38,8 @@ window.onload = function() {
   }
 
   window.setInterval(function() {
-    if(keepCheckingMood) {
-      document.dispatchEvent(event);
-    }
-  }, 10000);
+    document.dispatchEvent(event);
+  }, 2000);
 
   chrome.runtime.onMessage.addListener( function(message, sender, sendResponse) {
     switch(message.action){
@@ -72,9 +69,6 @@ window.onload = function() {
         }
         $("#queen-bee").attr('src', url);
         break;
-      case "play":
-        keepCheckingMood = !keepCheckingMood;
-      break;
     }
   });
 }
