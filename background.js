@@ -47,19 +47,19 @@ function playNextSong(mood) {
     prev = curr;
     if (curr == 'Happy') {
       SC.get('/playlists/188701950').then(function(list) {
-          playTrack(list.tracks[track++ % list.tracks.length].id);
-        });
-      }
-      else if (curr == 'Sad') {
-        SC.get('/playlists/188799404').then(function(list) {
-          playTrack(list.tracks[track++ % list.tracks.length].id);
-        });
-      }
-      else if (curr == 'Angry') {
-        SC.get('/playlists/188801285').then(function(list) {
-          playTrack(list.tracks[track++ % list.tracks.length].id);
-        });
-      }
+        playTrack(list.tracks[track++ % list.tracks.length].id);
+      });
+    }
+    else if (curr == 'Sad') {
+      SC.get('/playlists/188799404').then(function(list) {
+        playTrack(list.tracks[track++ % list.tracks.length].id);
+      });
+    }
+    else if (curr == 'Angry') {
+      SC.get('/playlists/188801285').then(function(list) {
+        playTrack(list.tracks[track++ % list.tracks.length].id);
+      });
+    }
     else if (curr == 'Neutral') {
       SC.get('/playlists/188803240').then(function(list) {
         playTrack(list.tracks[track++ % list.tracks.length].id);
@@ -72,15 +72,16 @@ function playNextSong(mood) {
     }
     else {
       SC.get('/playlists/188803409').then(function(list) {
-      playTrack(list.tracks[track++ % list.tracks.length].id);
+        playTrack(list.tracks[track++ % list.tracks.length].id);
       });
     }
   }
 }
 
 function NextSong() {
-  playing = true;
-  playNextSong(M);
+  if (playing) {
+    playNextSong(M);
+  }
   console.log("playing next song");
 }
 
@@ -94,10 +95,9 @@ function playTrack(id) {
     newPlayer.on('audio_error', NextSong);
     newPlayer.on('geo_blocked', NextSong);
     player = newPlayer;
-    player.play();
-    console.log(track.title);
-    console.log(track.id);
-    playing = true;
+    if(playing) {
+      player.play();
+    }
   });
 }
 
