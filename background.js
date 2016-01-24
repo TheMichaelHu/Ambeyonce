@@ -75,12 +75,11 @@ function playNextSong(mood) {
       playTrack(list.tracks[track++ % list.tracks.length].id);
       });
     }
-  } else {
-    playing = true;
   }
 }
 
 function NextSong() {
+  playing = true;
   playNextSong(M);
   console.log("playing next song");
 }

@@ -39,7 +39,7 @@ window.onload = function() {
 
   window.setInterval(function() {
     document.dispatchEvent(event);
-  }, 2000);
+  }, 4000);
 
   chrome.runtime.onMessage.addListener( function(message, sender, sendResponse) {
     switch(message.action){
