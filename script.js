@@ -38,15 +38,8 @@ window.onload = function() {
   }
 
   window.setInterval(function() {
-<<<<<<< HEAD
-    if(keepCheckingMood) {
-      document.dispatchEvent(event);
-    }
-  }, 4000);
-=======
     document.dispatchEvent(event);
   }, 2000);
->>>>>>> a4d1f151e9f10ad906acb4096aab4fc9c66cb455
 
   chrome.runtime.onMessage.addListener( function(message, sender, sendResponse) {
     switch(message.action){
