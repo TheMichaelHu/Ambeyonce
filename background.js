@@ -113,7 +113,6 @@ function getMood(data) {
       'data': data.split(',')[1]
     })
   ).then(function(res) {
-    console.log(res);
     res = JSON.parse(res);
     var max = 0;
     var mood = "";
@@ -124,10 +123,27 @@ function getMood(data) {
         mood = emotion;
       }
     }
-    chrome.runtime.sendMessage({from: "background", action: "moodGet", content: mood});
-    console.log(mood);
-    M = mood; 
+    if(playing) {
+      chrome.runtime.sendMessage({from: "background", action: "moodGet", content: "You are feeling " + mood});
+    }
+    M = mood;
     return mood;
+  });
+}
+
+function pauseIfNoOneThere(data) {
+  $.post(
+    'https://apiv2.indico.io/faciallocalization?key=17ab107868cf822a3deb50a6dff8078a',
+    JSON.stringify({
+      'data': data.split(',')[1]
+    })
+  ).then(function(res) {
+    res = JSON.parse(res);
+    if(playing && res["results"].length == 0) {
+      chrome.runtime.sendMessage({from: "background", action: "moodGet", content: "Where'd you go?"});
+      playing = false;
+      player.pause();
+    }
   });
 }
 
@@ -136,7 +152,8 @@ chrome.runtime.onMessage.addListener( function(message, sender, sendResponse) {
   if(message.from && message.from === "popup") {
     switch(message.action){
       case "getMood":
-        getMood(message.content)
+        pauseIfNoOneThere(message.content);
+        getMood(message.content);
         break;
     }
   }

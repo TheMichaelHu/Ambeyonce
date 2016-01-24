@@ -48,23 +48,26 @@ window.onload = function() {
         var url = "";
         console.log(message.content);
         switch(message.content) {
-          case "Angry":
+          case "You are feeling Angry":
             url = "http://www.mrctv.org/sites/default/files/images/Angry-Beyonce.jpg ";
             break;
-          case "Surprise":
+          case "You are feeling Surprise":
             url = "http://images.intouchweekly.com/uploads/posts/image/27459/beyonce-surprises.jpg";
             break;
-          case "Fear":
+          case "You are feeling Fear":
             url = "http://content.hollywire.com/sites/default/files/2013/02/04/beyonce-scared-supert-bowl.jpg";
             break;
-          case "Happy":
+          case "You are feeling Happy":
             url = "http://www.ew.com/sites/default/files/i/2013/09/04/Beyonce.jpg";
             break;
-          case "Sad":
+          case "You are feeling Sad":
             url = "http://i2.wp.com/behindthemirrorbeauty.com/wp-content/uploads/2013/11/Beyonce.jpg";
             break;
-          default:
+          case "You are feeling Neutral":
             url = "http://factmag-images.s3.amazonaws.com/wp-content/uploads/2013/12/beyonce-121313.jpg";
+            break;
+          default:
+            url = "https://havekidstheysaid.files.wordpress.com/2014/05/sadface.jpg";
             break;
         }
         $("#queen-bee").attr('src', url);
