@@ -42,7 +42,7 @@ window.onload = function() {
     if(keepCheckingMood) {
       document.dispatchEvent(event);
     }
-  }, 10000);
+  }, 4000);
 
   chrome.runtime.onMessage.addListener( function(message, sender, sendResponse) {
     switch(message.action){

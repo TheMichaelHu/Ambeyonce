@@ -12,7 +12,7 @@ SC.initialize({
   redirect_uri: 'http://klevingluo.me/callback'
 });
 var M;
-//playNextSong()
+playNextSong(M)
 var playing = true;
 var player;
 var track = 0;
@@ -21,7 +21,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
           if(message.from && message.from === "popup") {
             switch(message.action){
               case "next":
-                playNextSong();
+                playNextSong(M);
               break;
               case "play":
                 if (playing) {
@@ -36,34 +36,36 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
           }
 });
 
+var prev = 'Happy';
 // functions
 function playNextSong(mood) {
-  mood = M;
-  playing = false;
+  var curr = mood;
   var type;
  var beat;
- if (mood == 'Happy'){
+if (curr != prev){
+    prev = curr;
+ if (curr == 'Happy'){
     type = 'pop';
-    beat = 140;
+    beat = 140; 
     }
- else if (mood == 'Sad'){
+ else if (curr == 'Sad'){
     type = 'piano';
     beat =40;
      }
- else if (mood == 'Angry'){
+ else if (curr == 'Angry'){
     type = 'metal';
     beat = 120;
     }
-else if (mood == 'Neutral'){
+else if (curr == 'Neutral'){
     type = 'dubstep';
     beat = 100;
    }
-else if (mood == 'Fear'){
+else if (curr == 'Fear'){
     type = 'classical';
     beat = 120;
    }
 else {
-    type = 'country';
+    type = 'latin';
     beat = 80;
 }
 
@@ -75,10 +77,14 @@ else {
     playTrack(tracks[track++ % tracks.length].id)
   });
 }
+else {
+ playing = true;
+     }	
+}
 
 function NextSong() {
   playNextSong(M);
-  consol.log("playing next song");
+  console.log("playing next song");
 }
 
 function playTrack(id) {
@@ -127,7 +133,8 @@ function getMood(data) {
     }
     chrome.runtime.sendMessage({from: "background", action: "moodGet", content: mood});
     console.log(mood);
-    M = mood;
+    M = mood; 
+    playNextSong(M);
     return mood;
   });
 }
@@ -156,4 +163,3 @@ chrome.runtime.onMessage.addListener( function(message, sender, sendResponse) {
   }
 });
 
-playNextSong(M);
