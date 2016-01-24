@@ -16,7 +16,7 @@ var playing = true;
 var player;
 var track = 0;
 
-NextSong()
+NextSong();
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
           if(message.from && message.from === "popup") {
@@ -82,7 +82,6 @@ function NextSong() {
   if (playing) {
     playNextSong(M);
   }
-  console.log("playing next song");
 }
 
 function playTrack(id) {
@@ -121,6 +120,14 @@ function getMood(data) {
     var max = 0;
     var mood = "";
 
+    // Normalizing values with semi-arbitrary values
+    res["results"]['Happy'] -= .042;
+    res["results"]['Sad'] -= .26;
+    res["results"]['Angry'] -= .15;
+    res["results"]['Fear'] -= .46;
+    res["results"]['Surprise'] -= .20;
+    res["results"]['Neutral'] -= .05;
+
     for (var emotion in res["results"]) {
       if(res["results"][emotion] > max) {
         max = res["results"][emotion];
@@ -140,12 +147,13 @@ function pauseIfNoOneThere(data) {
   $.post(
     'https://apiv2.indico.io/faciallocalization?key=17ab107868cf822a3deb50a6dff8078a',
     JSON.stringify({
-      'data': data.split(',')[1]
+      'data': data.split(',')[1],
+      'sensitivity': .9
     })
   ).then(function(res) {
     res = JSON.parse(res);
     if(playing && res["results"].length == 0) {
-      chrome.runtime.sendMessage({from: "background", action: "moodGet", content: "Where'd you go?"});
+      chrome.runtime.sendMessage({from: "background", action: "moodGet", content: "Where'd you go? Press play to continue..."});
       playing = false;
       player.pause();
     }

@@ -26,6 +26,8 @@ window.onload = function() {
       var canvas = document.getElementById('canvas'); 
       canvas.width = vid.videoWidth;
       canvas.height = vid.videoHeight;
+      canvas.getContext('2d').translate(vid.videoWidth, 0);
+      canvas.getContext('2d').scale(-1, 1);
       canvas.getContext('2d').drawImage(vid, 0, 0);
       var data = canvas.toDataURL();
       document.getElementById('photo').setAttribute('src', data);
@@ -39,14 +41,13 @@ window.onload = function() {
 
   window.setInterval(function() {
     document.dispatchEvent(event);
-  }, 4000);
+  }, 2000);
 
   chrome.runtime.onMessage.addListener( function(message, sender, sendResponse) {
     switch(message.action){
       case "moodGet":
         $("#mood").text(message.content);
         var url = "";
-        console.log(message.content);
         switch(message.content) {
           case "You are feeling Angry":
             url = "http://www.mrctv.org/sites/default/files/images/Angry-Beyonce.jpg ";

@@ -9,6 +9,11 @@ h1 {
 	color: #eee;
 }
 
+video {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
 .navbar-default {
 	margin-bottom: 0px;
 }
